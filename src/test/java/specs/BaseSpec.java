@@ -8,15 +8,17 @@ import io.restassured.specification.ResponseSpecification;
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.with;
 
-public class UpdateUserRequestSpec {
-  public static RequestSpecification updateUserRequestSpec = with()
+public class BaseSpec {
+  public static RequestSpecification userRequestSpec = with()
     .filter(withCustomTemplates())
     .header("x-api-key", "reqres-free-v1")
     .contentType("application/json")
     .log().all();
 
-  public static ResponseSpecification updateUserResponseSpec = new ResponseSpecBuilder()
-    .expectStatusCode(200)
-    .log(LogDetail.ALL)
-    .build();
+  public static ResponseSpecification responseSpec(int expectedStatusCode) {
+    return new ResponseSpecBuilder()
+      .expectStatusCode(expectedStatusCode)
+      .log(LogDetail.ALL)
+      .build();
+  }
 }
